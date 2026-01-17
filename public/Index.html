@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>이천 작은가게 사랑 지도</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="이천 작은가게 사랑 지도">
+    <meta property="og:description" content="이천 지역화폐 7% 캐시백! 내 주변 가맹점을 지도에서 바로 확인하세요.">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>🗺️ 이천 작은가게 사랑 지도</h1>
+            <p>최대 5만원까지 결제금액의 7% 캐시백이<br>있는 이천의 작은 가게 지도입니다.</p>
+            <a href="https://www.icheon.go.kr/news/board/post/view.do?bcIdx=785&mid=0301000000&idx=316102" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="notice-link">
+               📢 이천시청 공지사항 원본 보기
+            </a>
+        </header>
+
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" id="search-input" class="search-input" placeholder="🔍 가게명 또는 주소 검색...">
+            </div>
+        </div>
+
+        <div id="category-box" class="category-scroll">
+            </div>
+
+        <div id="map"></div>
+
+        <div class="store-list-box">
+            <div class="list-header">
+                <span id="current-category-name">전체 목록</span>
+                <span class="list-count">총 <span id="store-count">0</span>곳</span>
+            </div>
+            
+            <div class="list-scroll-area">
+                <table class="store-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 40%">가게명</th>
+                            <th>주소</th>
+                        </tr>
+                    </thead>
+                    <tbody id="store-tbody">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="description">
+            <h3>📌 안내사항</h3>
+            <ul>
+                <li>지도 상의 위치가 실제와 다를 수 있으니, <strong>반드시 아래 목록의 주소를 확인</strong>해주세요.</li>
+                <li>상단 버튼을 눌러 지역별(도로명)로 모아볼 수 있습니다.</li>
+                <li>오류는 댓글로 남겨주세요.</li>
+            </ul>
+            <br>
+            <p style="color:#888;">데이터 출처: 이천시 지역화폐 작은가게 가맹점 목록 (2025.12.16.기준)</p>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=85fd4b6cec4f99983fbc5bf99ca77f7b"></script>
+    
+    <script src="script.js"></script>
+</body>
+</html>

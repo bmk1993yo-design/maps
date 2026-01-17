@@ -1,21 +1,27 @@
-// 웹앱 접속 시 index.html 파일을 보여주는 함수
-function doGet() {
-  return HtmlService.createTemplateFromFile('Index')
-      .evaluate()
-      .setTitle('이천 작은가게 사랑 지도') 
-      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL)
-      .addMetaTag('viewport', 'width=device-width, initial-scale=1');
+// [수정됨] 웹앱 접속 시 HTML 대신 'JSON 데이터'를 반환하는 함수
+function doGet(e) {
+  
+  // 1. 데이터를 가져오는 함수 실행
+  const data = getMapData();
+  
+  // 2. 결과를 JSON 문자열로 변환하여 반환 (CORS 문제 해결 및 데이터 전송용)
+  return ContentService.createTextOutput(JSON.stringify(data))
+    .setMimeType(ContentService.MimeType.JSON);
 }
 
-// 데이터와 분류 목록을 한 번에 가져오는 함수
+// [기존 유지] 데이터와 분류 목록을 한 번에 가져오는 함수
 function getMapData() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   
   // 1. 지도 데이터 가져오기 (Icheon 시트)
   const mapSheet = ss.getSheetByName('Icheon');
   
+  // 데이터가 있는지 확인 (없으면 빈 배열 반환)
+  if (!mapSheet) {
+    return { locations: [], categories: ["전체"] };
+  }
+
   // 데이터가 있는 전체 범위 가져오기
-  // (만약 데이터가 10000행 등으로 너무 많으면 속도를 위해 범위를 지정하는 것이 좋지만, 일단은 전체로 합니다)
   const mapData = mapSheet.getDataRange().getValues();
   
   const locations = [];
@@ -24,15 +30,15 @@ function getMapData() {
   for (let i = 1; i < mapData.length; i++) {
     let row = mapData[i];
     
-    // [중요 수정사항]
-    // if (row[3] && row[4]) { ... } 조건을 제거했습니다.
-    // 이제 위도(D열), 경도(E열)가 없어도 데이터를 무조건 가져옵니다.
+    // [중요 수정사항 유지]
+    // 위도(D열), 경도(E열)가 없어도 데이터를 무조건 가져옵니다.
+    // 프론트엔드에서 lat, lng가 null일 경우 주소를 좌표로 변환하는 로직을 추가해야 할 수도 있습니다.
     
     locations.push({
       name: row[1],      // B열: 상호명 (Index 1)
-      address: row[2],   // C열: 주소 (Index 2) - ★ 시트의 C열에 주소가 있어야 합니다!
-      lat: row[3] ? row[3] : null, // D열: 위도 (없으면 null)
-      lng: row[4] ? row[4] : null, // E열: 경도 (없으면 null)
+      address: row[2],   // C열: 주소 (Index 2)
+      lat: row[3] ? row[3] : null, // D열: 위도
+      lng: row[4] ? row[4] : null, // E열: 경도
       category: row[5]   // F열: 분류 (Index 5)
     });
   }
