@@ -50,13 +50,34 @@ header p {
     transition: background 0.2s;
 }
 .notice-link:hover { background-color: #555; }
+.share-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px 6px 20px;
+    background: #fff;
+}
+.share-label {
+    font-size: 12px;
+    color: #555;
+    background: #fff3cd;
+    border: 1px solid #ffe08a;
+    padding: 4px 8px;
+    border-radius: 999px;
+}
+.share-btn {
+    display: inline-flex;
+    align-items: center;
+}
+.share-btn img { width: 32px; height: 32px; }
 
 /* 빠른 이동 */
 .quick-nav {
     display: flex;
     gap: 10px;
     justify-content: center;
-    padding: 12px 20px 0 20px;
+    padding: 12px 20px 10px 20px;
     background: #fff;
     border-bottom: 1px solid #eee;
 }

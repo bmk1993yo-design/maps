@@ -1,6 +1,9 @@
 // ▼▼▼ 여기에 배포한 구글 웹앱 URL을 따옴표 안에 붙여넣으세요 ▼▼▼
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyE_bjkjlbrVTgyy9ifpVlTOMXoKEhC9Zkfg6l0yS3-a4YxkCYiCyyej8ba1eXO6L7C/exec";
 const BASE_TITLE = "이천 작은가게 사랑 지도 | 지역화폐 7% 캐시백 가맹점 찾기";
+const KAKAO_JS_KEY = "85fd4b6cec4f99983fbc5bf99ca77f7b";
+const SHARE_URL = "https://icheon-map.pages.dev/";
+const SHARE_IMAGE = "https://pixabay.com/ko/images/download/local-store-5762254_1920.png";
 
 var map;
 var allData = [];
@@ -14,6 +17,7 @@ var currentInfowindow = null;
 window.addEventListener('DOMContentLoaded', function() {
     initMap();
     fetchData(); // 데이터 가져오기 시작
+    initKakaoShare();
     
     // 검색창 이벤트 연결
     var searchInput = document.getElementById('search-input');
@@ -39,6 +43,36 @@ function initMap() {
             currentInfowindow.close();
             currentInfowindow = null;
         }
+    });
+}
+
+function initKakaoShare() {
+    if (typeof Kakao === "undefined") return;
+    if (!KAKAO_JS_KEY || KAKAO_JS_KEY === "YOUR_JAVASCRIPT_KEY") return;
+    if (!Kakao.isInitialized()) {
+        Kakao.init(KAKAO_JS_KEY);
+    }
+    Kakao.Share.createDefaultButton({
+        container: '#kakaotalk-sharing-btn',
+        objectType: 'feed',
+        content: {
+            title: '이천 작은가게 사랑 지도',
+            description: '이천 지역화폐 7% 캐시백 가맹점을 지도와 목록으로 확인하세요.',
+            imageUrl: SHARE_IMAGE,
+            link: {
+                mobileWebUrl: SHARE_URL,
+                webUrl: SHARE_URL
+            }
+        },
+        buttons: [
+            {
+                title: '웹으로 이동',
+                link: {
+                    mobileWebUrl: SHARE_URL,
+                    webUrl: SHARE_URL
+                }
+            }
+        ]
     });
 }
 
