@@ -114,7 +114,21 @@ function runFilter() {
         return isCategoryMatch && isSearchMatch;
     });
 
+    updateResultSummary(filteredData.length, rawKeyword, titleText);
     updateMapAndList(filteredData);
+}
+
+function updateResultSummary(count, rawKeyword, titleText) {
+    var summaryEl = document.getElementById('result-summary');
+    if (!summaryEl) return;
+
+    var scopeText = (titleText === '전체') ? '전체' : titleText;
+    var parts = [scopeText + " 기준"];
+    var trimmed = rawKeyword.trim();
+    if (trimmed.length > 0) {
+        parts.push("검색어: " + trimmed);
+    }
+    summaryEl.textContent = parts.join(" · ") + " · 결과 " + count + "곳";
 }
 
 function updateMapAndList(data) {
