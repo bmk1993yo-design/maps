@@ -1,5 +1,6 @@
 // ▼▼▼ 여기에 배포한 구글 웹앱 URL을 따옴표 안에 붙여넣으세요 ▼▼▼
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyE_bjkjlbrVTgyy9ifpVlTOMXoKEhC9Zkfg6l0yS3-a4YxkCYiCyyej8ba1eXO6L7C/exec";
+const BASE_TITLE = "이천 작은가게 사랑 지도 | 지역화폐 7% 캐시백 가맹점 찾기";
 
 var map;
 var allData = [];
@@ -85,8 +86,10 @@ function runFilter() {
     var titleText = (currentCategory === '전체' || currentCategory === 'All') ? '전체' : currentCategory;
     if (searchKeyword.length > 0) {
         document.getElementById('current-category-name').innerText = titleText + " 내 검색: " + rawKeyword;
+        document.title = titleText + " 검색: " + rawKeyword + " | " + BASE_TITLE;
     } else {
         document.getElementById('current-category-name').innerText = titleText + " 목록";
+        document.title = (titleText === "전체") ? BASE_TITLE : titleText + " | " + BASE_TITLE;
     }
 
     var filteredData = allData.filter(function(item) {

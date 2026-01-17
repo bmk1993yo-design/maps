@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://icheon-map.pages.dev/sitemap.xml
